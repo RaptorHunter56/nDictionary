@@ -15,7 +15,7 @@ namespace nDictionary
         public BaseDictonary<TKey>.nKeyCollection Keys => new BaseDictonary<TKey>.nKeyCollection(this);
         #endregion
         #region Constructors
-        public IDictionary(Type[] types) { this.@base = new BaseDictonary<TKey>(types); }
+        public IDictionary(Type[] types) => this.@base = new BaseDictonary<TKey>(types);
         #endregion
         #region Methods
         public nKeyValuePair this[TKey key]
@@ -23,6 +23,8 @@ namespace nDictionary
             get { return new nKeyValuePair(key, this.@base.GetnDictionary(key)); }
             set { }// Fix
         }
+
+        public void Add(TKey key, params dynamic[] vs) => @base.Add(key, vs);
         #endregion
 
         public class nKeyValuePair
