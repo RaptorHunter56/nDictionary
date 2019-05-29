@@ -140,5 +140,39 @@ namespace nDictionaryUnitTest
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
         }
+        [TestClass]
+        public class GenericTest
+        {
+            [TestMethod]
+            public void StringTest()
+            {
+                try
+                {
+                    var t = new Generic("Test");
+                    Assert.AreSame(t.GetType(), "Test".GetType());
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void IntTest()
+            {
+                try
+                {
+                    var t = new Generic(110);
+                    Assert.AreSame(t.GetType(), 110.GetType());
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void ObjectTest()
+            {
+                try
+                {
+                    var t = new Generic(StaticDictionary.ExpectedDictionary);
+                    Assert.AreEqual(t.GetType(), StaticDictionary.ExpectedDictionary.GetType());
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+        }
     }
 }

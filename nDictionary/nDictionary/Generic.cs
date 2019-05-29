@@ -16,6 +16,7 @@ namespace nDictionary
         #region Parameters
         private Type type;
         public dynamic GetValue { get; internal set; }
+        public new Type GetType() => type;
         #endregion
         #region Constructors
         public Generic(dynamic value)
@@ -23,6 +24,16 @@ namespace nDictionary
                 this.GetValue = value;
                 type = value.GetType();
         }
+        #endregion
+        #region Methods
+        public T Cast<T>(out T result)
+        {
+            result = (T)GetValue;
+            return result;
+        }
+        #endregion
+        #region Overrides
+        public override string ToString() => GetValue.ToString();
         #endregion
     }
 }
