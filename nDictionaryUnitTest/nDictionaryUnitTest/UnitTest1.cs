@@ -181,10 +181,106 @@ namespace nDictionaryUnitTest
             try
             {
                 var Test1 = new nDictionary<int, string>();
-                // Fix
+                Test1.Add(0, "Help");
+                var Test2 = Test1[0];
+                Assert.AreEqual(Test2, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help") }));
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+        [TestMethod]
+        public void nDictionary_IndexersTest2()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Me");
+                Assert.AreEqual(Test1[0], new nDictionary<int, string, string>.nKeyValuePair(0, new dynamic[] { "Help", "Me" }));
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+    }
+
+    [TestClass]
+    public class IBaseDictonaryTest
+    {
+        [TestClass]
+        public class KeysTest
+        {
+            [TestMethod]
+            public void KeysTest1()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string>();
+                    Test1.Add(0, "Help");
+                    Test1.Keys.CopyTo(new int[1], 0);
+                    return;
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void KeysTest2()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string>();
+                    Test1.Add(0, "Help");
+                    var Test2 = Test1.Keys.Count;
+                    Assert.AreEqual(Test2, 1);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void KeysTest3()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string>();
+                    Test1.Add(0, "Help");
+                    var Test6 = Test1.Keys.ToString();
+                    Assert.AreEqual(Test6.ToString(), "nDictionary.IBaseDictonary`1+nKeyCollection[System.Int32]");
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+
+            [TestMethod]
+            public void KeysTest4()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string, string>();
+                    Test1.Add(0, "Help", "Me");
+                    Test1.Keys.CopyTo(new int[1], 0);
+                    return;
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void KeysTest5()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string, string>();
+                    Test1.Add(0, "Help", "Me");
+                    var Test2 = Test1.Keys.Count;
+                    Assert.AreEqual(Test2, 1);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void KeysTest6()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string, string>();
+                    Test1.Add(0, "Help", "Me");
+                    var Test6 = Test1.Keys.ToString();
+                    Assert.AreEqual(Test6.ToString(), "nDictionary.IBaseDictonary`1+nKeyCollection[System.Int32]");
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
         }
     }
 }
