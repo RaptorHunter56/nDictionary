@@ -13,5 +13,6 @@ namespace nDictionary
 {
     public partial class IBaseDictonary<TKey>
     {
+
     }
 }

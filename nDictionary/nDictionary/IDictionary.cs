@@ -10,5 +10,11 @@ namespace nDictionary
 {
     public class IDictionary<TKey>
     {
+        #region Parameters
+        internal BaseDictonary<TKey> @base;
+        #endregion
+        #region Constructors
+        public IDictionary(Type[] types) { this.@base = new BaseDictonary<TKey>(types); }
+        #endregion
     }
 }

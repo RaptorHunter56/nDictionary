@@ -13,5 +13,16 @@ namespace nDictionary
 {
     public class Generic
     {
+        #region Parameters
+        private Type type;
+        public dynamic GetValue { get; internal set; }
+        #endregion
+        #region Constructors
+        public Generic(dynamic value)
+        {
+                this.GetValue = value;
+                type = value.GetType();
+        }
+        #endregion
     }
 }
