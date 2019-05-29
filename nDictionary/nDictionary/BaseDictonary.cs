@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace nDictionary
 {
-    internal partial class BaseDictonary<TKey>
+    internal partial class BaseDictonary<TKey> : IBaseDictonary<TKey>
     {
         #region Parameters
         public Dictionary<int, Type> Types = new Dictionary<int, Type>();
