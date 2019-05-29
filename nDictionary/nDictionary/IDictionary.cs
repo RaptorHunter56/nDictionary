@@ -12,8 +12,10 @@ namespace nDictionary
     {
         #region Parameters
         internal BaseDictonary<TKey> @base;
+        public int Count() => @base.Dictionarys.Values.FirstOrDefault().Count();
         public BaseDictonary<TKey>.nKeyCollection Keys => new BaseDictonary<TKey>.nKeyCollection(this);
         public BaseDictonary<TKey>.nValueCollection[] Values => BaseDictonary<TKey>.nValueCollection.GetOut(this);
+        public IEqualityComparer<TKey> Comparer => @base.Comparer;
         #endregion
         #region Constructors
         public IDictionary(Type[] types) => this.@base = new BaseDictonary<TKey>(types);

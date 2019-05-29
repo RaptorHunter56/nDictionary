@@ -16,6 +16,7 @@ namespace nDictionary
         #region Parameters
         public Dictionary<int, Type> Types = new Dictionary<int, Type>();
         public Dictionary<int, Dictionary<TKey, Generic>> Dictionarys = new Dictionary<int, Dictionary<TKey, Generic>>();
+        public IEqualityComparer<TKey> Comparer => Dictionarys[0].Comparer;
         #endregion
         #region Constructors
         public BaseDictonary(params Type[] types) { types.ToList().ForEach(x => Types.Add(Types.Count, x)); }
