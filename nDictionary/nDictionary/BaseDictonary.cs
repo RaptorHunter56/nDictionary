@@ -61,6 +61,8 @@ namespace nDictionary
             }
             catch (Exception ex) { return false; }
         }
+
+        internal dynamic[] GetnDictionary(TKey key) => Dictionarys.ToList().Select(x => x.Value.Where(x => !EqualityComparer<TKey>.Default.Equals(x.Key, key)).FirstOrDefault().Value).ToArray();
         #endregion
     }
 }

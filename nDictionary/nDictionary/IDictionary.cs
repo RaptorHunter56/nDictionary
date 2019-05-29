@@ -16,5 +16,27 @@ namespace nDictionary
         #region Constructors
         public IDictionary(Type[] types) { this.@base = new BaseDictonary<TKey>(types); }
         #endregion
+        #region Methods
+        public nKeyValuePair this[TKey key]
+        {
+            get { return new nKeyValuePair(key, this.@base.GetnDictionary(key)); }
+            set { }// Fix
+        }
+        #endregion
+
+        public class nKeyValuePair
+        {
+            #region Parameters
+            public TKey Key { get; internal set; }
+            public dynamic[] Value { get; internal set; }
+            #endregion
+            #region Constructors
+            public nKeyValuePair(TKey key, dynamic[] v)
+            {
+                this.Key = key;
+                this.Value = v;
+            }
+            #endregion
+        }
     }
 }

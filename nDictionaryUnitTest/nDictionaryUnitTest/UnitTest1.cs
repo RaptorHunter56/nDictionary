@@ -79,7 +79,6 @@ namespace nDictionaryUnitTest
             catch (Exception ex) { Assert.Fail(ex.Message); }
         }
 
-
         [TestMethod]
         public void nDictionary_ConstructorsTest7()
         {
@@ -140,6 +139,7 @@ namespace nDictionaryUnitTest
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
         }
+
         [TestClass]
         public class GenericTest
         {
@@ -173,6 +173,18 @@ namespace nDictionaryUnitTest
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
+        }
+
+        [TestMethod]
+        public void nDictionary_IndexersTest1()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string>();
+                // Fix
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
         }
     }
 }
