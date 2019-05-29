@@ -12,14 +12,16 @@ namespace nDictionary
     {
         #region Parameters
         internal BaseDictonary<TKey> @base;
-        public int Count() => @base.Dictionarys.Values.FirstOrDefault().Count();
+        public int Count => @base.Dictionarys.Values.FirstOrDefault().Count();
         public BaseDictonary<TKey>.nKeyCollection Keys => new BaseDictonary<TKey>.nKeyCollection(this);
         public BaseDictonary<TKey>.nValueCollection[] Values => BaseDictonary<TKey>.nValueCollection.GetOut(this);
         public IEqualityComparer<TKey> Comparer => @base.Comparer;
         #endregion
+
         #region Constructors
         public IDictionary(Type[] types) => this.@base = new BaseDictonary<TKey>(types);
         #endregion
+
         #region Methods
         public nKeyValuePair this[TKey key]
         {
@@ -28,6 +30,7 @@ namespace nDictionary
         }
 
         public void Add(TKey key, params dynamic[] vs) => @base.Add(key, vs);
+        public void Clear() => @base.Clear();
         #endregion
 
         public class nKeyValuePair
@@ -36,6 +39,7 @@ namespace nDictionary
             public TKey Key { get; internal set; }
             public dynamic[] Value { get; internal set; }
             #endregion
+
             #region Constructors
             public nKeyValuePair(TKey key, dynamic[] v)
             {

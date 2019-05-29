@@ -21,9 +21,11 @@ namespace nDictionary
             public int Count { get { return keys.Count; } }
             public void CopyTo(TKey[] array, int index) => keys.CopyTo(array, index);
             #endregion
+
             #region Constructors
             public nKeyCollection(IDictionary<TKey> dictionary) => keys = dictionary.@base.Dictionarys.First().Value.Keys;
             #endregion
+
             #region Methods
             IEnumerator<TKey> IEnumerable<TKey>.GetEnumerator() => ((IEnumerable<TKey>)keys).GetEnumerator();
             IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TKey>)keys).GetEnumerator();
@@ -36,6 +38,7 @@ namespace nDictionary
             private Dictionary<TKey, Generic>.ValueCollection values;
             public int Count { get { return values.Count; } }
             #endregion
+
             #region Constructors
             public nValueCollection(IDictionary<TKey> dictionary, int index)
             {
@@ -45,6 +48,7 @@ namespace nDictionary
                 this.values = temp.Values;
             }
             #endregion
+
             #region Methods
             internal static nValueCollection[] GetOut(IDictionary<TKey> dictionary)
             {

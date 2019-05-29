@@ -18,9 +18,11 @@ namespace nDictionary
         public Dictionary<int, Dictionary<TKey, Generic>> Dictionarys = new Dictionary<int, Dictionary<TKey, Generic>>();
         public IEqualityComparer<TKey> Comparer => Dictionarys[0].Comparer;
         #endregion
+
         #region Constructors
         public BaseDictonary(params Type[] types) { types.ToList().ForEach(x => Types.Add(Types.Count, x)); }
         #endregion
+
         #region Methods
         public bool ReFactor()
         {
@@ -69,6 +71,10 @@ namespace nDictionary
         {
             var list = vs.ToList();
             list.ForEach(x => Dictionarys[list.IndexOf(x)].Add(key, new Generic(x)));
+        }
+        internal void Clear()
+        {
+            foreach (var item in Dictionarys) item.Value.Clear();
         }
         #endregion
     }

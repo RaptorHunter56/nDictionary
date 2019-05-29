@@ -210,7 +210,7 @@ namespace nDictionaryUnitTest
             {
                 var Test1 = new nDictionary<int, string>();
                 Test1.Add(0, "Help");
-                var Test2 = Test1.Count();
+                var Test2 = Test1.Count;
                 Assert.AreEqual(Test2, 1);
                 return;
             }
@@ -223,7 +223,7 @@ namespace nDictionaryUnitTest
             {
                 var Test1 = new nDictionary<int, string, string>();
                 Test1.Add(0, "Help", "Me");
-                var Test2 = Test1.Count();
+                var Test2 = Test1.Count;
                 Assert.AreEqual(Test2, 1);
                 return;
             }
@@ -385,6 +385,39 @@ namespace nDictionaryUnitTest
                     Test1.Add(0, "Help", "Me");
                     var Test6 = Test1.Values[1].ToString();
                     Assert.AreEqual(Test6.ToString(), "nDictionary.IBaseDictonary`1+nValueCollection[System.Int32]");
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+        }
+
+        [TestClass]
+        public class ClearTest
+        {
+            [TestMethod]
+            public void ClearTest1()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string>();
+                    Test1.Add(0, "Help");
+                    Test1.Clear();
+                    var Test2 = Test1.Values[0].Count;
+                    Assert.AreEqual(Test2, 0);
+                    return;
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void ClearTest2()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string, string>();
+                    Test1.Add(0, "Help", "Me");
+                    Test1.Clear();
+                    var Test2 = Test1.Values[0].Count;
+                    Assert.AreEqual(Test2, 0);
+                    return;
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
