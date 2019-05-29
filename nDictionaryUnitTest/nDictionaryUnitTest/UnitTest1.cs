@@ -282,5 +282,83 @@ namespace nDictionaryUnitTest
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
         }
+
+        [TestClass]
+        public class ValuesTest
+        {
+            [TestMethod]
+            public void ValuesTest1()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string>();
+                    Test1.Add(0, "Help");
+                    Test1.Values[0].CopyTo(new string[1], 0);
+                    return;
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void ValuesTest2()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string>();
+                    Test1.Add(0, "Help");
+                    var Test2 = Test1.Values[0].Count;
+                    Assert.AreEqual(Test2, 1);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void ValuesTest3()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string>();
+                    Test1.Add(0, "Help");
+                    var Test6 = Test1.Values[0].ToString();
+                    Assert.AreEqual(Test6.ToString(), "nDictionary.IBaseDictonary`1+nValueCollection[System.Int32]");
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+
+            [TestMethod]
+            public void ValuesTest4()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string, string>();
+                    Test1.Add(0, "Help", "Me");
+                    Test1.Values[1].CopyTo(new string[1], 0);
+                    return;
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void ValuesTest5()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string, string>();
+                    Test1.Add(0, "Help", "Me");
+                    var Test2 = Test1.Values[1].Count;
+                    Assert.AreEqual(Test2, 1);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void ValuesTest6()
+            {
+                try
+                {
+                    var Test1 = new nDictionary<int, string, string>();
+                    Test1.Add(0, "Help", "Me");
+                    var Test6 = Test1.Values[1].ToString();
+                    Assert.AreEqual(Test6.ToString(), "nDictionary.IBaseDictonary`1+nValueCollection[System.Int32]");
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+        }
     }
 }

@@ -29,5 +29,40 @@ namespace nDictionary
             IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TKey>)keys).GetEnumerator();
             #endregion
         }
+        [DebuggerDisplay("Count = {Count}")]
+        public sealed class nValueCollection : IEnumerable<Generic>
+        {
+            #region Parameters
+            private Dictionary<TKey, Generic>.ValueCollection values;
+            public int Count { get { return values.Count; } }
+            #endregion
+            #region Constructors
+            public nValueCollection(IDictionary<TKey> dictionary, int index)
+            {
+                var temp = new Dictionary<TKey, Generic>();
+                var list = dictionary.@base.Dictionarys[index].ToList();
+                list.ForEach(x => temp.Add(x.Key, x.Value));
+                this.values = temp.Values;
+            }
+            #endregion
+            #region Methods
+            internal static nValueCollection[] GetOut(IDictionary<TKey> dictionary)
+            {
+                List<nValueCollection> temp = new List<nValueCollection>();
+                var list = dictionary.@base.Dictionarys.ToList();
+                list.ForEach(x => temp.Add(new nValueCollection(dictionary, list.IndexOf(x))));
+                return temp.ToArray();
+            }
+            public void CopyTo<T>(T[] array, int index)
+            {
+                var temp = new Generic[values.Count];
+                values.CopyTo(temp, index);
+                array = Array.ConvertAll(temp, x => (T)x.GetValue);
+            }
+            public Dictionary<TKey, Generic>.ValueCollection.Enumerator GetEnumerator() => values.GetEnumerator();
+            IEnumerator<Generic> IEnumerable<Generic>.GetEnumerator() => ((IEnumerable<Generic>)values).GetEnumerator();
+            IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<Generic>)values).GetEnumerator();
+            #endregion
+        }
     }
 }
