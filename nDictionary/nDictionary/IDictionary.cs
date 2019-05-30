@@ -31,7 +31,7 @@ namespace nDictionary
 
         public void Add(TKey key, params dynamic[] vs) => @base.Add(key, vs);
         public void Clear() => @base.Clear();
-        public bool ContainsKey(TKey key) { return true; } // Fix
+        public bool ContainsKey(TKey key) => @base.Dictionarys.Values.FirstOrDefault().ContainsKey(key);// Fix
         #endregion
 
         public class nKeyValuePair

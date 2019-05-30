@@ -204,8 +204,6 @@ namespace nDictionaryUnitTest
             catch (Exception ex) { Assert.Fail(ex.Message); }
         }
 
-
-
         [TestMethod]
         public void nDictionary_CountTest1()
         {
@@ -228,6 +226,37 @@ namespace nDictionaryUnitTest
                 Test1.Add(0, "Help", "Me");
                 var Test2 = Test1.Count;
                 Assert.AreEqual(Test2, 1);
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+
+        [TestMethod]
+        public void nDictionary_ContainsKeyTest1()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                var Test2 = Test1.ContainsKey(0);
+                Assert.AreEqual(Test2, true);
+                Test2 = Test1.ContainsKey(1);
+                Assert.AreEqual(Test2, false);
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+        [TestMethod]
+        public void nDictionary_ContainsKeyTest2()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Me");
+                var Test2 = Test1.ContainsKey(0);
+                Assert.AreEqual(Test2, true);
+                Test2 = Test1.ContainsKey(1);
+                Assert.AreEqual(Test2, false);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }

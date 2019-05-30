@@ -44,6 +44,7 @@ namespace nDictionary
             }
             catch (Exception ex) { return false; }
         }
+
         public bool ReFactor(IEqualityComparer<TKey> comparer)
         {
             try
@@ -69,11 +70,8 @@ namespace nDictionary
         {
             List<Generic> temp = new List<Generic>();
             foreach (var item in Dictionarys)
-            {
                 temp.Add(item.Value[key]);
-            }
             return temp.ToArray();
-            //Dictionarys.ToList().Select(x => x.Value.Where(y => !EqualityComparer<TKey>.Default.Equals(y.Key, key)).FirstOrDefault().Value).ToArray();
         }
 
         internal void Add(TKey key, dynamic[] vs)
