@@ -65,7 +65,16 @@ namespace nDictionary
             catch (Exception ex) { return false; }
         }
 
-        internal dynamic[] GetnDictionary(TKey key) => Dictionarys.ToList().Select(x => x.Value.Where(y => !EqualityComparer<TKey>.Default.Equals(y.Key, key)).FirstOrDefault().Value).ToArray();
+        internal Generic[] GetnDictionary(TKey key)
+        {
+            List<Generic> temp = new List<Generic>();
+            foreach (var item in Dictionarys)
+            {
+                temp.Add(item.Value[key]);
+            }
+            return temp.ToArray();
+            //Dictionarys.ToList().Select(x => x.Value.Where(y => !EqualityComparer<TKey>.Default.Equals(y.Key, key)).FirstOrDefault().Value).ToArray();
+        }
 
         internal void Add(TKey key, dynamic[] vs)
         {

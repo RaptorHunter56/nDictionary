@@ -31,20 +31,26 @@ namespace nDictionary
 
         public void Add(TKey key, params dynamic[] vs) => @base.Add(key, vs);
         public void Clear() => @base.Clear();
+        public bool ContainsKey(TKey key) { return true; } // Fix
         #endregion
 
         public class nKeyValuePair
         {
             #region Parameters
             public TKey Key { get; internal set; }
-            public dynamic[] Value { get; internal set; }
+            public Generic[] Value { get; internal set; }
             #endregion
 
             #region Constructors
-            public nKeyValuePair(TKey key, dynamic[] v)
+            public nKeyValuePair(TKey key, Generic[] v)
             {
                 this.Key = key;
                 this.Value = v;
+            }
+            public nKeyValuePair(TKey key, dynamic[] v)
+            {
+                this.Key = key;
+                this.Value = v.ToList().Select(x => new Generic(x)).ToArray();
             }
             #endregion
         }

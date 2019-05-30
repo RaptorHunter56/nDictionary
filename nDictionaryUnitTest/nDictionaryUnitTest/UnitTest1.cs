@@ -183,7 +183,8 @@ namespace nDictionaryUnitTest
                 var Test1 = new nDictionary<int, string>();
                 Test1.Add(0, "Help");
                 var Test2 = Test1[0];
-                Assert.AreEqual(Test2, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help") }));
+                Assert.AreEqual(Test2.Key, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help") }).Key);
+                Assert.AreEqual(Test2.Value.Length, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help") }).Value.Length);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -195,7 +196,9 @@ namespace nDictionaryUnitTest
             {
                 var Test1 = new nDictionary<int, string, string>();
                 Test1.Add(0, "Help", "Me");
-                Assert.AreEqual(Test1[0], new nDictionary<int, string, string>.nKeyValuePair(0, new dynamic[] { "Help", "Me" }));
+                var Test2 = Test1[0];
+                Assert.AreEqual(Test2.Key, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help"), new Generic("Me") }).Key);
+                Assert.AreEqual(Test2.Value.Length, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help"), new Generic("Me") }).Value.Length);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }

@@ -13,6 +13,7 @@ namespace nDictionary
         #region Parameters
         public static Type[] GetTypes { get { return new Type[] { typeof(TValue1) }; } }
         #endregion
+
         #region Constructors
         public nDictionary() : base(GetTypes) { this.@base.ReFactor(); }
         public nDictionary(int capacity) : base(GetTypes) { this.@base.ReFactor(capacity); }
@@ -28,6 +29,7 @@ namespace nDictionary
         #region Parameters
         public static Type[] GetTypes { get { return new Type[] { typeof(TValue1), typeof(TValue2) }; } }
         #endregion
+
         #region Constructors
         public nDictionary() : base(GetTypes) { this.@base.ReFactor(); }
         public nDictionary(int capacity) : base(GetTypes) { this.@base.ReFactor(capacity); }
