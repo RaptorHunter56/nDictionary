@@ -32,6 +32,9 @@ namespace nDictionary
         public void Add(TKey key, params dynamic[] vs) => @base.Add(key, vs);
         public void Clear() => @base.Clear();
         public bool ContainsKey(TKey key) => @base.Dictionarys.Values.FirstOrDefault().ContainsKey(key);// Fix
+        public bool ContainsValue<T>(T value) => ContainsValue<T>(value, Enumerable.Range(1, Values.Count()).ToArray());// Fix
+        public bool ContainsValue<T>(T value, int position) => ContainsValue<T>(value, new int[1] { position });// Fix
+        public bool ContainsValue<T>(T value, int[] position) => @base.ContainsValue(value, position);// Fix
         #endregion
 
         public class nKeyValuePair

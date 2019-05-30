@@ -44,7 +44,6 @@ namespace nDictionary
             }
             catch (Exception ex) { return false; }
         }
-
         public bool ReFactor(IEqualityComparer<TKey> comparer)
         {
             try
@@ -82,6 +81,22 @@ namespace nDictionary
         internal void Clear()
         {
             foreach (var item in Dictionarys) item.Value.Clear();
+        }
+
+        internal bool ContainsValue<T>(T value, int[] position)
+        {
+            bool temp = false;
+            int temp2 = 1;
+            foreach (var item in Dictionarys)
+            {
+                if (position.Contains(temp2))
+                {
+                    bool temp3 = item.Value.Values.ToList().Select(x => x.Equals(new Generic(value))).Where(x => x == true).Count() > 0;
+                    if (temp3) temp = true;
+                }
+                temp2++;
+            }
+            return temp;
         }
         #endregion
     }

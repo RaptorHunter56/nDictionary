@@ -140,41 +140,7 @@ namespace nDictionaryUnitTest
             catch (Exception ex) { Assert.Fail(ex.Message); }
         }
 
-        [TestClass]
-        public class GenericTest
-        {
-            [TestMethod]
-            public void StringTest()
-            {
-                try
-                {
-                    var t = new Generic("Test");
-                    Assert.AreSame(t.GetType(), "Test".GetType());
-                }
-                catch (Exception ex) { Assert.Fail(ex.Message); }
-            }
-            [TestMethod]
-            public void IntTest()
-            {
-                try
-                {
-                    var t = new Generic(110);
-                    Assert.AreSame(t.GetType(), 110.GetType());
-                }
-                catch (Exception ex) { Assert.Fail(ex.Message); }
-            }
-            [TestMethod]
-            public void ObjectTest()
-            {
-                try
-                {
-                    var t = new Generic(StaticDictionary.ExpectedDictionary);
-                    Assert.AreEqual(t.GetType(), StaticDictionary.ExpectedDictionary.GetType());
-                }
-                catch (Exception ex) { Assert.Fail(ex.Message); }
-            }
-        }
-
+        
         [TestMethod]
         public void nDictionary_IndexersTest1()
         {
@@ -261,8 +227,160 @@ namespace nDictionaryUnitTest
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
         }
-    }
 
+    }
+    [TestClass]
+    public class GenericTest
+    {
+        [TestMethod]
+        public void StringTest()
+        {
+            try
+            {
+                var t = new Generic("Test");
+                Assert.AreSame(t.GetType(), "Test".GetType());
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+        [TestMethod]
+        public void IntTest()
+        {
+            try
+            {
+                var t = new Generic(110);
+                Assert.AreSame(t.GetType(), 110.GetType());
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+        [TestMethod]
+        public void ObjectTest()
+        {
+            try
+            {
+                var t = new Generic(StaticDictionary.ExpectedDictionary);
+                Assert.AreEqual(t.GetType(), StaticDictionary.ExpectedDictionary.GetType());
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+    }
+    [TestClass]
+    public class ContainsValueTest
+    {
+
+        [TestMethod]
+        public void nDictionary_ContainsValueTest1()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                var Test2 = Test1.ContainsValue("Help");
+                Assert.AreEqual(Test2, true);
+                Test2 = Test1.ContainsValue("No");
+                Assert.AreEqual(Test2, false);
+                Test2 = Test1.ContainsValue(0);
+                Assert.AreEqual(Test2, false);
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+
+        [TestMethod]
+        public void nDictionary_ContainsValueTest2()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                var Test2 = Test1.ContainsValue("Help", 1);
+                Assert.AreEqual(Test2, true);
+                Test2 = Test1.ContainsValue("Help", 2);
+                Assert.AreEqual(Test2, false);
+                Test2 = Test1.ContainsValue("No", 1);
+                Assert.AreEqual(Test2, false);
+                Test2 = Test1.ContainsValue(0);
+                Assert.AreEqual(Test2, false);
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+
+        [TestMethod]
+        public void nDictionary_ContainsValueTest3()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                var Test2 = Test1.ContainsValue("Help", new int[1] { 1 });
+                Assert.AreEqual(Test2, true);
+                Test2 = Test1.ContainsValue("Help", new int[2] { 1, 2 });
+                Assert.AreEqual(Test2, true);
+                Test2 = Test1.ContainsValue("No", new int[1] { 1 });
+                Assert.AreEqual(Test2, false);
+                Test2 = Test1.ContainsValue(0);
+                Assert.AreEqual(Test2, false);
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+
+        [TestMethod]
+        public void nDictionary_ContainsValueTest4()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Me");
+                var Test2 = Test1.ContainsValue("Me");
+                Assert.AreEqual(Test2, true);
+                Test2 = Test1.ContainsValue("No");
+                Assert.AreEqual(Test2, false);
+                Test2 = Test1.ContainsValue(0);
+                Assert.AreEqual(Test2, false);
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+        [TestMethod]
+        public void nDictionary_ContainsValueTest5()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Me");
+                var Test2 = Test1.ContainsValue("Me", 2);
+                Assert.AreEqual(Test2, true);
+                Test2 = Test1.ContainsValue("Me", 1);
+                Assert.AreEqual(Test2, false);
+                Test2 = Test1.ContainsValue("No", 1);
+                Assert.AreEqual(Test2, false);
+                Test2 = Test1.ContainsValue(0);
+                Assert.AreEqual(Test2, false);
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+        [TestMethod]
+        public void nDictionary_ContainsValueTest6()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Me");
+                var Test2 = Test1.ContainsValue("Me", new int[1] { 2 });
+                Assert.AreEqual(Test2, true);
+                Test2 = Test1.ContainsValue("Help", new int[2] { 1, 2 });
+                Assert.AreEqual(Test2, true);
+                Test2 = Test1.ContainsValue("No", new int[1] { 1 });
+                Assert.AreEqual(Test2, false);
+                Test2 = Test1.ContainsValue(0);
+                Assert.AreEqual(Test2, false);
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+    }
     [TestClass]
     public class IBaseDictonaryTest
     {

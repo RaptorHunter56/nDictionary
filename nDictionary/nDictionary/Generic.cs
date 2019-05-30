@@ -37,6 +37,7 @@ namespace nDictionary
 
         #region Overrides
         public override string ToString() => GetValue.ToString();
+        public override bool Equals(object obj) => (obj.GetType() == typeof(Generic))? GetValue.Equals(((Generic)obj).GetValue) : GetValue.Equals(obj);
         #endregion
     }
 }
