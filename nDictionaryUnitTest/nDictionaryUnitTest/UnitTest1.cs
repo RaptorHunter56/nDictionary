@@ -572,5 +572,24 @@ namespace nDictionaryUnitTest
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
         }
+
+        [TestMethod]
+        public void GetEnumeratorTest()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                var Test2 = new List<string>();
+                foreach (nDictionary<int, string>.nKeyValuePair entry in Test1)
+                {
+                    Test2.Add(entry.Value[0].Cast<string>());
+                }
+                Assert.AreEqual(Test2.Count, 2);
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
     }
 }

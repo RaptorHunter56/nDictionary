@@ -33,11 +33,13 @@ namespace nDictionary
             result = (T)GetValue;
             return result;
         }
+        public T Cast<T>() => (T)this.GetValue;
         #endregion
 
         #region Overrides
         public override string ToString() => GetValue.ToString();
         public override bool Equals(object obj) => (obj.GetType() == typeof(Generic))? GetValue.Equals(((Generic)obj).GetValue) : GetValue.Equals(obj);
+        public override int GetHashCode() => GetValue.GetHashCode();
         #endregion
     }
 }
