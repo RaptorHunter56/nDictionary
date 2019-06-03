@@ -240,7 +240,7 @@ namespace nDictionaryUnitTest
             try
             {
                 var t = new Generic("Test");
-                Assert.AreSame(t.GetType(), "Test".GetType());
+                Assert.AreSame("Test".GetType(), t.GetType());
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
         }
@@ -250,7 +250,7 @@ namespace nDictionaryUnitTest
             try
             {
                 var t = new Generic(110);
-                Assert.AreSame(t.GetType(), 110.GetType());
+                Assert.AreSame(110.GetType(), t.GetType());
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
         }
@@ -260,7 +260,7 @@ namespace nDictionaryUnitTest
             try
             {
                 var t = new Generic(StaticDictionary.ExpectedDictionary);
-                Assert.AreEqual(t.GetType(), StaticDictionary.ExpectedDictionary.GetType());
+                Assert.AreEqual(StaticDictionary.ExpectedDictionary.GetType(), t.GetType());
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
         }
@@ -277,11 +277,11 @@ namespace nDictionaryUnitTest
                 var Test1 = new nDictionary<int, string>();
                 Test1.Add(0, "Help");
                 var Test2 = Test1.ContainsValue("Help");
-                Assert.AreEqual(Test2, true);
+                Assert.AreEqual(true, Test2);
                 Test2 = Test1.ContainsValue("No");
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 Test2 = Test1.ContainsValue(0);
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -295,13 +295,13 @@ namespace nDictionaryUnitTest
                 var Test1 = new nDictionary<int, string>();
                 Test1.Add(0, "Help");
                 var Test2 = Test1.ContainsValue("Help", 1);
-                Assert.AreEqual(Test2, true);
+                Assert.AreEqual(true, Test2);
                 Test2 = Test1.ContainsValue("Help", 2);
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 Test2 = Test1.ContainsValue("No", 1);
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 Test2 = Test1.ContainsValue(0);
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -315,13 +315,13 @@ namespace nDictionaryUnitTest
                 var Test1 = new nDictionary<int, string>();
                 Test1.Add(0, "Help");
                 var Test2 = Test1.ContainsValue("Help", new int[1] { 1 });
-                Assert.AreEqual(Test2, true);
+                Assert.AreEqual(true, Test2);
                 Test2 = Test1.ContainsValue("Help", new int[2] { 1, 2 });
-                Assert.AreEqual(Test2, true);
+                Assert.AreEqual(true, Test2);
                 Test2 = Test1.ContainsValue("No", new int[1] { 1 });
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 Test2 = Test1.ContainsValue(0);
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -335,11 +335,11 @@ namespace nDictionaryUnitTest
                 var Test1 = new nDictionary<int, string, string>();
                 Test1.Add(0, "Help", "Me");
                 var Test2 = Test1.ContainsValue("Me");
-                Assert.AreEqual(Test2, true);
+                Assert.AreEqual(true, Test2);
                 Test2 = Test1.ContainsValue("No");
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 Test2 = Test1.ContainsValue(0);
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -352,13 +352,13 @@ namespace nDictionaryUnitTest
                 var Test1 = new nDictionary<int, string, string>();
                 Test1.Add(0, "Help", "Me");
                 var Test2 = Test1.ContainsValue("Me", 2);
-                Assert.AreEqual(Test2, true);
+                Assert.AreEqual(true, Test2);
                 Test2 = Test1.ContainsValue("Me", 1);
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 Test2 = Test1.ContainsValue("No", 1);
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 Test2 = Test1.ContainsValue(0);
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -371,13 +371,13 @@ namespace nDictionaryUnitTest
                 var Test1 = new nDictionary<int, string, string>();
                 Test1.Add(0, "Help", "Me");
                 var Test2 = Test1.ContainsValue("Me", new int[1] { 2 });
-                Assert.AreEqual(Test2, true);
+                Assert.AreEqual(true, Test2);
                 Test2 = Test1.ContainsValue("Help", new int[2] { 1, 2 });
-                Assert.AreEqual(Test2, true);
+                Assert.AreEqual(true, Test2);
                 Test2 = Test1.ContainsValue("No", new int[1] { 1 });
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 Test2 = Test1.ContainsValue(0);
-                Assert.AreEqual(Test2, false);
+                Assert.AreEqual(false, Test2);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -409,7 +409,7 @@ namespace nDictionaryUnitTest
                     var Test1 = new nDictionary<int, string>();
                     Test1.Add(0, "Help");
                     var Test2 = Test1.Keys.Count;
-                    Assert.AreEqual(Test2, 1);
+                    Assert.AreEqual(1, Test2);
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
@@ -421,7 +421,7 @@ namespace nDictionaryUnitTest
                     var Test1 = new nDictionary<int, string>();
                     Test1.Add(0, "Help");
                     var Test6 = Test1.Keys.ToString();
-                    Assert.AreEqual(Test6.ToString(), "nDictionary.IBaseDictonary`1+nKeyCollection[System.Int32]");
+                    Assert.AreEqual("nDictionary.IBaseDictonary`1+nKeyCollection[System.Int32]", Test6.ToString());
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
@@ -446,7 +446,7 @@ namespace nDictionaryUnitTest
                     var Test1 = new nDictionary<int, string, string>();
                     Test1.Add(0, "Help", "Me");
                     var Test2 = Test1.Keys.Count;
-                    Assert.AreEqual(Test2, 1);
+                    Assert.AreEqual(1, Test2);
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
@@ -458,7 +458,7 @@ namespace nDictionaryUnitTest
                     var Test1 = new nDictionary<int, string, string>();
                     Test1.Add(0, "Help", "Me");
                     var Test6 = Test1.Keys.ToString();
-                    Assert.AreEqual(Test6.ToString(), "nDictionary.IBaseDictonary`1+nKeyCollection[System.Int32]");
+                    Assert.AreEqual("nDictionary.IBaseDictonary`1+nKeyCollection[System.Int32]", Test6.ToString());
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
@@ -487,7 +487,7 @@ namespace nDictionaryUnitTest
                     var Test1 = new nDictionary<int, string>();
                     Test1.Add(0, "Help");
                     var Test2 = Test1.Values[0].Count;
-                    Assert.AreEqual(Test2, 1);
+                    Assert.AreEqual(1, Test2);
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
@@ -499,7 +499,7 @@ namespace nDictionaryUnitTest
                     var Test1 = new nDictionary<int, string>();
                     Test1.Add(0, "Help");
                     var Test6 = Test1.Values[0].ToString();
-                    Assert.AreEqual(Test6.ToString(), "nDictionary.IBaseDictonary`1+nValueCollection[System.Int32]");
+                    Assert.AreEqual("nDictionary.IBaseDictonary`1+nValueCollection[System.Int32]", Test6.ToString());
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
@@ -524,7 +524,7 @@ namespace nDictionaryUnitTest
                     var Test1 = new nDictionary<int, string, string>();
                     Test1.Add(0, "Help", "Me");
                     var Test2 = Test1.Values[1].Count;
-                    Assert.AreEqual(Test2, 1);
+                    Assert.AreEqual(1, Test2);
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
@@ -536,7 +536,7 @@ namespace nDictionaryUnitTest
                     var Test1 = new nDictionary<int, string, string>();
                     Test1.Add(0, "Help", "Me");
                     var Test6 = Test1.Values[1].ToString();
-                    Assert.AreEqual(Test6.ToString(), "nDictionary.IBaseDictonary`1+nValueCollection[System.Int32]");
+                    Assert.AreEqual("nDictionary.IBaseDictonary`1+nValueCollection[System.Int32]", Test6.ToString());
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
@@ -554,7 +554,7 @@ namespace nDictionaryUnitTest
                     Test1.Add(0, "Help");
                     Test1.Clear();
                     var Test2 = Test1.Values[0].Count;
-                    Assert.AreEqual(Test2, 0);
+                    Assert.AreEqual(0, Test2);
                     return;
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -568,7 +568,7 @@ namespace nDictionaryUnitTest
                     Test1.Add(0, "Help", "Me");
                     Test1.Clear();
                     var Test2 = Test1.Values[0].Count;
-                    Assert.AreEqual(Test2, 0);
+                    Assert.AreEqual(0, Test2);
                     return;
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -588,7 +588,7 @@ namespace nDictionaryUnitTest
                 {
                     Test2.Add(entry.Value[0].Cast<string>());
                 }
-                Assert.AreEqual(Test2.Count, 2);
+                Assert.AreEqual(2, Test2.Count);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -606,7 +606,7 @@ namespace nDictionaryUnitTest
                 {
                     Test2.Add(entry.Value[0].Cast<string>());
                 }
-                Assert.AreEqual(Test2.Count, 2);
+                Assert.AreEqual(2, Test2.Count);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -661,6 +661,72 @@ namespace nDictionaryUnitTest
             //        Console.WriteLine("{0} lives at {1}.", de.Key, de.Value);
             //    }
             //}
+        }
+
+        [TestClass]
+        public class RemoveTest
+        {
+            [TestMethod]
+            public void RemoveTest1()
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                try
+                {
+                    bool test = Test1.Remove(0);
+                    Assert.IsTrue(test);
+                    Assert.AreEqual(2, Test1.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void RemoveTest2()
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                try
+                {
+                    bool test = Test1.Remove(10);
+                    Assert.IsFalse(test);
+                    Assert.AreEqual(3, Test1.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+
+            [TestMethod]
+            public void RemoveTest3()
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Help");
+                Test1.Add(1, "Me", "Me");
+                Test1.Add(2, "Please", "Please");
+                try
+                {
+                    bool test = Test1.Remove(0);
+                    Assert.IsTrue(test);
+                    Assert.AreEqual(2, Test1.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void RemoveTest4()
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Help");
+                Test1.Add(1, "Me", "Me");
+                Test1.Add(2, "Please", "Please");
+                try
+                {
+                    bool test = Test1.Remove(10);
+                    Assert.IsFalse(test);
+                    Assert.AreEqual(3, Test1.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
         }
     }
 }

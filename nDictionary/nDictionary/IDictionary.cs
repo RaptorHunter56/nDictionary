@@ -53,6 +53,8 @@ namespace nDictionary
         //    info.AddValue("types", @base.Types.Select(x => x.Value).ToArray(), typeof(Type[]));
         //    info.AddValue("base", @base, typeof(BaseDictonary<TKey>));
         //}
+
+        public bool Remove(TKey key) => ContainsKey(key) ? @base.Remove(key) : false;
         #endregion
 
         //[Serializable]

@@ -73,6 +73,19 @@ namespace nDictionary
             }
             catch (Exception ex) { return false; }
         }
+
+        internal bool Remove(TKey key)
+        {
+            bool r = true;
+            try
+            {
+                foreach (var item in Dictionarys)
+                    r = item.Value.Remove(key) ? r : false;
+            }
+            catch { return false; }
+            return r;
+        }
+
         public bool ReFactor(int capacity, IEqualityComparer<TKey> comparer)
         {
             try
