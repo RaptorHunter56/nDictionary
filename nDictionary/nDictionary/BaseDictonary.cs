@@ -6,12 +6,14 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace nDictionary
 {
-    internal partial class BaseDictonary<TKey> : IBaseDictonary<TKey>
+    //[Serializable]
+    internal partial class BaseDictonary<TKey> : IBaseDictonary<TKey>//, ISerializable
     {
         #region Parameters
         public Dictionary<int, Type> Types = new Dictionary<int, Type>();
@@ -21,6 +23,23 @@ namespace nDictionary
 
         #region Constructors
         public BaseDictonary(params Type[] types) { types.ToList().ForEach(x => Types.Add(Types.Count, x)); }
+        //protected BaseDictonary(SerializationInfo info, StreamingContext context)
+        //{
+        //    //List<IDictionary<TKey>.nKeyValuePair> temp = new List<IDictionary<TKey>.nKeyValuePair>();
+        //    //foreach (var item in Dictionarys[0])
+        //    //{
+        //    //    List<Generic> temp2 = new List<Generic>(Dictionarys[0].Count);
+        //    //    Dictionarys.ToList().ForEach(x => temp2.Add(x.Value[item.Key]));
+        //    //    temp.Add(new IDictionary<TKey>.nKeyValuePair(item.Key, temp2.ToArray()));
+        //    //}
+        //    //info.AddValue("values", temp.ToArray(), typeof(IDictionary<TKey>.nKeyValuePair[]));
+
+        //    var temp = (IDictionary<TKey>.nKeyValuePair[])info.GetValue("values", typeof(IDictionary<TKey>.nKeyValuePair[]));
+        //    foreach (var item in temp)
+        //    {
+
+        //    }
+        //}
         #endregion
 
         #region Methods
@@ -76,7 +95,12 @@ namespace nDictionary
         internal void Add(TKey key, dynamic[] vs)
         {
             var list = vs.ToList();
-            list.ForEach(x => Dictionarys[list.IndexOf(x)].Add(key, new Generic(x)));
+            var postion = -1;
+            foreach (var x in list)
+            {
+                postion++;
+                Dictionarys[postion].Add(key, new Generic(x));
+            }
         }
         internal void Clear()
         {
@@ -98,6 +122,18 @@ namespace nDictionary
             }
             return temp;
         }
+
+        //public void GetObjectData(SerializationInfo info, StreamingContext context)
+        //{
+        //    List<IDictionary<TKey>.nKeyValuePair> temp = new List<IDictionary<TKey>.nKeyValuePair>();
+        //    foreach (var item in Dictionarys[0])
+        //    {
+        //        List<Generic> temp2 = new List<Generic>(Dictionarys[0].Count);
+        //        Dictionarys.ToList().ForEach(x => temp2.Add(x.Value[item.Key]));
+        //        temp.Add(new IDictionary<TKey>.nKeyValuePair(item.Key, temp2.ToArray()));
+        //    }
+        //    info.AddValue("values", temp.ToArray(), typeof(IDictionary<TKey>.nKeyValuePair[]));
+        //}
         #endregion
     }
 }

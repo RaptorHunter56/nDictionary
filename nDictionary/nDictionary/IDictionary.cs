@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace nDictionary
 {
-    public class IDictionary<TKey> : IEnumerable
+    //[Serializable]
+    public class IDictionary<TKey> : IEnumerable//, ISerializable
     {
         #region Parameters
         internal BaseDictonary<TKey> @base;
@@ -21,6 +22,13 @@ namespace nDictionary
 
         #region Constructors
         public IDictionary(Type[] types) => this.@base = new BaseDictonary<TKey>(types);
+        //public IDictionary(SerializationInfo info, StreamingContext context)
+        //{
+        //    @base = new BaseDictonary<TKey>((Type[])info.GetValue("types", typeof(Type[])));
+        //    @base.ReFactor();
+        //    @base.GetObjectData(info, context);
+        //    //@base = (BaseDictonary<TKey>)info.GetValue("base", typeof(BaseDictonary<TKey>));
+        //}
         #endregion
 
         #region Methods
@@ -39,9 +47,16 @@ namespace nDictionary
 
         public Enumerator GetEnumerator() => new Enumerator(this);
         IEnumerator IEnumerable.GetEnumerator() => (IEnumerator)GetEnumerator();
+
+        //public void GetObjectData(SerializationInfo info, StreamingContext context)
+        //{
+        //    info.AddValue("types", @base.Types.Select(x => x.Value).ToArray(), typeof(Type[]));
+        //    info.AddValue("base", @base, typeof(BaseDictonary<TKey>));
+        //}
         #endregion
 
-        public class nKeyValuePair
+        //[Serializable]
+        public class nKeyValuePair// : ISerializable
         {
             #region Parameters
             public TKey Key { get; internal set; }
@@ -59,6 +74,19 @@ namespace nDictionary
                 this.Key = key;
                 this.Value = v.ToList().Select(x => new Generic(x)).ToArray();
             }
+            //public nKeyValuePair(SerializationInfo info, StreamingContext context)
+            //{
+            //    Key = (TKey)info.GetValue("key", typeof(TKey));
+            //    Value = (Generic[])info.GetValue("values", typeof(Generic[]));
+            //}
+            #endregion
+
+            #region Methods
+            //public void GetObjectData(SerializationInfo info, StreamingContext context)
+            //{
+            //    info.AddValue("key", Key, typeof(TKey));
+            //    info.AddValue("values", Value, typeof(Generic[]));
+            //}
             #endregion
         }
 

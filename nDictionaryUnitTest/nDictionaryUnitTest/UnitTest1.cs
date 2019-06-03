@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace nDictionaryUnitTest
 {
@@ -574,7 +576,7 @@ namespace nDictionaryUnitTest
         }
 
         [TestMethod]
-        public void GetEnumeratorTest()
+        public void GetEnumeratorTest1()
         {
             try
             {
@@ -590,6 +592,75 @@ namespace nDictionaryUnitTest
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+        [TestMethod]
+        public void GetEnumeratorTest2()
+        {
+            try
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Help");
+                Test1.Add(1, "Me", "Me");
+                var Test2 = new List<string>();
+                foreach (nDictionary<int, string, string>.nKeyValuePair entry in Test1)
+                {
+                    Test2.Add(entry.Value[0].Cast<string>());
+                }
+                Assert.AreEqual(Test2.Count, 2);
+                return;
+            }
+            catch (Exception ex) { Assert.Fail(ex.Message); }
+        }
+
+        [TestClass]
+        public class SerializableTest
+        {
+            //[TestMethod]
+            //public void SerializeTest()
+            //{
+            //    var Test1 = new nDictionary<int, string>();
+            //    Test1.Add(0, "Help");
+            //    Test1.Add(1, "Me");
+            //    Test1.Add(2, "Please");
+            //    FileStream fs = new FileStream("DataFile.dat", FileMode.Create);
+            //    BinaryFormatter formatter = new BinaryFormatter();
+            //    try
+            //    {
+            //        formatter.Serialize(fs, Test1);
+            //    }
+            //    catch (SerializationException e)
+            //    {
+            //        Assert.Fail("Failed to serialize. Reason: " + e.Message);
+            //    }
+            //    finally
+            //    {
+            //        fs.Close();
+            //    }
+            //}
+
+            //[TestMethod]
+            //public void DeserializeTest()
+            //{
+            //    nDictionary<int, string> Test1 = null;
+            //    FileStream fs = new FileStream("DataFile.dat", FileMode.Open);
+            //    try
+            //    {
+            //        BinaryFormatter formatter = new BinaryFormatter();
+            //        Test1 = (nDictionary<int, string>)formatter.Deserialize(fs);
+            //    }
+            //    catch (SerializationException e)
+            //    {
+            //        Assert.Fail("Failed to deserialize. Reason: " + e.Message);
+            //    }
+            //    finally
+            //    {
+            //        fs.Close();
+            //    }
+            //    foreach (nDictionary<int, string>.nKeyValuePair de in Test1)
+            //    {
+            //        Console.WriteLine("{0} lives at {1}.", de.Key, de.Value);
+            //    }
+            //}
         }
     }
 }

@@ -6,12 +6,15 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace nDictionary
 {
-    public class Generic
+    //[Serializable]
+    public class Generic //: ISerializable
     {
         #region Parameters
         private Type type;
@@ -25,6 +28,7 @@ namespace nDictionary
                 this.GetValue = value;
                 type = value.GetType();
         }
+        //protected Generic(SerializationInfo info, StreamingContext context) : this(info.GetValue("value", (Type)info.GetValue("type", typeof(Type)))) { }
         #endregion
 
         #region Methods
@@ -34,6 +38,12 @@ namespace nDictionary
             return result;
         }
         public T Cast<T>() => (T)this.GetValue;
+
+        //public void GetObjectData(SerializationInfo info, StreamingContext context)
+        //{
+        //    info.AddValue("value", GetValue, type);
+        //    info.AddValue("type", type, typeof(Type));
+        //}
         #endregion
 
         #region Overrides
