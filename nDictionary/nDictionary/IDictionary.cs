@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace nDictionary
 {
     //[Serializable]
-    public class IDictionary<TKey> : IEnumerable//, ISerializable
+    public class IDictionary<TKey> : IEnumerable, IEnumerable<IDictionary<TKey>.nKeyValuePair>//, ISerializable
     {
         #region Parameters
         internal BaseDictonary<TKey> @base;
@@ -47,6 +47,7 @@ namespace nDictionary
 
         public Enumerator GetEnumerator() => new Enumerator(this);
         IEnumerator IEnumerable.GetEnumerator() => (IEnumerator)GetEnumerator();
+        IEnumerator<nKeyValuePair> IEnumerable<nKeyValuePair>.GetEnumerator() => (IEnumerator<nKeyValuePair>)GetEnumerator();
 
         //public void GetObjectData(SerializationInfo info, StreamingContext context)
         //{
@@ -62,6 +63,7 @@ namespace nDictionary
             catch { return false; }
             return true;
         }
+
         #endregion
 
         //[Serializable]
@@ -69,19 +71,19 @@ namespace nDictionary
         {
             #region Parameters
             public TKey Key { get; internal set; }
-            public Generic[] Value { get; internal set; }
+            public Generic[] Values { get; internal set; }
             #endregion
 
             #region Constructors
             public nKeyValuePair(TKey key, Generic[] v)
             {
                 this.Key = key;
-                this.Value = v;
+                this.Values = v;
             }
             public nKeyValuePair(TKey key, dynamic[] v)
             {
                 this.Key = key;
-                this.Value = v.ToList().Select(x => new Generic(x)).ToArray();
+                this.Values = v.ToList().Select(x => new Generic(x)).ToArray();
             }
             //public nKeyValuePair(SerializationInfo info, StreamingContext context)
             //{
@@ -97,6 +99,11 @@ namespace nDictionary
             //    info.AddValue("values", Value, typeof(Generic[]));
             //}
             #endregion
+
+            #region Overrides
+            public override string ToString() => $"[{this.Key}, [{String.Join(", ",this.Values.Select(x => x.GetValue))}]]";
+            #endregion
+
         }
 
         public struct Enumerator : IEnumerator<nKeyValuePair>, IEnumerator
