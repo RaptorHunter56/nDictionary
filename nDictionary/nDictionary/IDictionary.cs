@@ -55,6 +55,13 @@ namespace nDictionary
         //}
 
         public bool Remove(TKey key) => ContainsKey(key) ? @base.Remove(key) : false;
+        public bool TryGetValue(TKey key, out nKeyValuePair value)
+        {
+            value = null;
+            try { value = new nKeyValuePair(key, @base.GetnDictionary(key)); }
+            catch { return false; }
+            return true;
+        }
         #endregion
 
         //[Serializable]

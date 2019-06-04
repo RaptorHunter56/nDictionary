@@ -728,5 +728,80 @@ namespace nDictionaryUnitTest
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
         }
+
+
+        [TestClass]
+        public class TryGetValueTest
+        {
+            [TestMethod]
+            public void TryGetValueTest1()
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                try
+                {
+                    nDictionary<int, string>.nKeyValuePair value;
+                    bool test = Test1.TryGetValue(0, out value);
+                    Assert.IsTrue(test);
+                    string v = value.Value[0].Cast<string>();
+                    Assert.AreEqual("Help", v);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void TryGetValueTest2()
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                try
+                {
+                    nDictionary<int, string>.nKeyValuePair value;
+                    bool test = Test1.TryGetValue(10, out value);
+                    Assert.IsFalse(test);
+                    //string v = value.Value[0].Cast<string>();
+                    //Assert.AreNotEqual("Help", v);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+
+            [TestMethod]
+            public void TryGetValueTest3()
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Help");
+                Test1.Add(1, "Me", "Me");
+                Test1.Add(2, "Please", "Please");
+                try
+                {
+                    nDictionary<int, string, string>.nKeyValuePair value;
+                    bool test = Test1.TryGetValue(0, out value);
+                    Assert.IsTrue(test);
+                    string v = value.Value[0].Cast<string>();
+                    Assert.AreEqual("Help", v);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void TryGetValueTest4()
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Help");
+                Test1.Add(1, "Me", "Me");
+                Test1.Add(2, "Please", "Please");
+                try
+                {
+                    nDictionary<int, string, string>.nKeyValuePair value;
+                    bool test = Test1.TryGetValue(10, out value);
+                    Assert.IsFalse(test);
+                    //string v = value.Value[0].Cast<string>();
+                    //Assert.AreNotEqual("Help", v);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+        }
     }
 }
