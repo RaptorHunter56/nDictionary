@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 
 namespace nDictionary
 {
-    //[Serializable]
-    public class Generic //: ISerializable
+    [Serializable]
+    public class Generic : ISerializable
     {
         #region Parameters
         private Type type;
@@ -25,10 +25,15 @@ namespace nDictionary
         #region Constructors
         public Generic(dynamic value)
         {
-                this.GetValue = value;
-                type = value.GetType();
+            this.GetValue = value;
+            type = value.GetType();
         }
-        //protected Generic(SerializationInfo info, StreamingContext context) : this(info.GetValue("value", (Type)info.GetValue("type", typeof(Type)))) { }
+        public Generic(Generic value)
+        {
+            this.GetValue = value.GetValue;
+            type = value.type;
+        }
+        protected Generic(SerializationInfo info, StreamingContext context) : this(info.GetValue("value", (Type)info.GetValue("type", typeof(Type)))) { }
         #endregion
 
         #region Methods
@@ -39,11 +44,11 @@ namespace nDictionary
         }
         public T Cast<T>() => (T)this.GetValue;
 
-        //public void GetObjectData(SerializationInfo info, StreamingContext context)
-        //{
-        //    info.AddValue("value", GetValue, type);
-        //    info.AddValue("type", type, typeof(Type));
-        //}
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("type", type, typeof(Type));
+            info.AddValue("value", GetValue, type);
+        }
         #endregion
 
         #region Overrides

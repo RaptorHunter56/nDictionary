@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace nDictionary
 {
-    //[Serializable]
-    public class IDictionary<TKey> : IEnumerable, IEnumerable<IDictionary<TKey>.nKeyValuePair>//, ISerializable
+    [Serializable]
+    public class IDictionary<TKey> : IEnumerable, IEnumerable<IDictionary<TKey>.nKeyValuePair>
     {
         #region Parameters
         internal BaseDictonary<TKey> @base;
@@ -22,13 +22,10 @@ namespace nDictionary
 
         #region Constructors
         public IDictionary(Type[] types) => this.@base = new BaseDictonary<TKey>(types);
-        //public IDictionary(SerializationInfo info, StreamingContext context)
-        //{
-        //    @base = new BaseDictonary<TKey>((Type[])info.GetValue("types", typeof(Type[])));
-        //    @base.ReFactor();
-        //    @base.GetObjectData(info, context);
-        //    //@base = (BaseDictonary<TKey>)info.GetValue("base", typeof(BaseDictonary<TKey>));
-        //}
+        public IDictionary(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("static.dic", GetEnumerator(), typeof(IEnumerator<nKeyValuePair>));
+        }
         #endregion
 
         #region Methods
@@ -49,11 +46,10 @@ namespace nDictionary
         IEnumerator IEnumerable.GetEnumerator() => (IEnumerator)GetEnumerator();
         IEnumerator<nKeyValuePair> IEnumerable<nKeyValuePair>.GetEnumerator() => (IEnumerator<nKeyValuePair>)GetEnumerator();
 
-        //public void GetObjectData(SerializationInfo info, StreamingContext context)
-        //{
-        //    info.AddValue("types", @base.Types.Select(x => x.Value).ToArray(), typeof(Type[]));
-        //    info.AddValue("base", @base, typeof(BaseDictonary<TKey>));
-        //}
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("list", new List<nKeyValuePair>() { new nKeyValuePair(new Generic(0).Cast<TKey>(), new dynamic[1] { "Help" }), new nKeyValuePair(new Generic(1).Cast<TKey>(), new dynamic[1] { "Me" }) }, typeof(List<nKeyValuePair>));
+        }
 
         public bool Remove(TKey key) => ContainsKey(key) ? @base.Remove(key) : false;
         public bool TryGetValue(TKey key, out nKeyValuePair value)
@@ -64,10 +60,11 @@ namespace nDictionary
             return true;
         }
 
+        public static T ConvertValue<T>(string value) => (T)Convert.ChangeType(value, typeof(T));
+        public static object ConvertValue(string value , Type type) => Convert.ChangeType(value, type);
         #endregion
-
-        //[Serializable]
-        public class nKeyValuePair// : ISerializable
+        
+        public class nKeyValuePair
         {
             #region Parameters
             public TKey Key { get; internal set; }
@@ -75,29 +72,27 @@ namespace nDictionary
             #endregion
 
             #region Constructors
-            public nKeyValuePair(TKey key, Generic[] v)
-            {
-                this.Key = key;
-                this.Values = v;
-            }
             public nKeyValuePair(TKey key, dynamic[] v)
             {
                 this.Key = key;
                 this.Values = v.ToList().Select(x => new Generic(x)).ToArray();
             }
-            //public nKeyValuePair(SerializationInfo info, StreamingContext context)
-            //{
-            //    Key = (TKey)info.GetValue("key", typeof(TKey));
-            //    Value = (Generic[])info.GetValue("values", typeof(Generic[]));
-            //}
+            public nKeyValuePair(TKey key, Generic[] v)
+            {
+                this.Key = key;
+                this.Values = v;
+            }
+            public nKeyValuePair(SerializationInfo info, StreamingContext context)
+            {
+            }
             #endregion
 
             #region Methods
-            //public void GetObjectData(SerializationInfo info, StreamingContext context)
-            //{
-            //    info.AddValue("key", Key, typeof(TKey));
-            //    info.AddValue("values", Value, typeof(Generic[]));
-            //}
+            public void GetObjectData(SerializationInfo info, StreamingContext context)
+            {
+                info.AddValue("key", Key, typeof(TKey));
+                info.AddValue("values", Values, typeof(Generic[]));
+            }
             #endregion
 
             #region Overrides
@@ -105,7 +100,7 @@ namespace nDictionary
             #endregion
 
         }
-
+        
         public struct Enumerator : IEnumerator<nKeyValuePair>, IEnumerator
         {
             #region Parameters
@@ -127,6 +122,13 @@ namespace nDictionary
                 this.dictionaryBase = this.dictionary;
                 this.position = -1;
             }
+            public Enumerator(SerializationInfo info, StreamingContext context)
+            {
+                this.dictionary = new List<nKeyValuePair>();
+                this.dictionaryBase = this.dictionary;
+                this.position = -1;
+                //info.AddValue("static.dic", GetEnumerator(), typeof(IEnumerator<nKeyValuePair>));
+            }
             #endregion
 
             #region Methods
@@ -145,6 +147,11 @@ namespace nDictionary
             {
                 dictionary = new List<nKeyValuePair>();
                 dictionaryBase = new List<nKeyValuePair>();
+            }
+
+            public void GetObjectData(SerializationInfo info, StreamingContext context)
+            {
+                info.AddValue("static.dic", dictionary, typeof(List<nKeyValuePair>));
             }
             #endregion
         }

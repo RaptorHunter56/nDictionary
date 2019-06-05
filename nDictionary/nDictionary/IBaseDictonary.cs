@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace nDictionary
 {
+    [Serializable]
     public partial class IBaseDictonary<TKey>
     {
         [DebuggerDisplay("Count = {Count}")]

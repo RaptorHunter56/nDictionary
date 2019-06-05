@@ -152,7 +152,7 @@ namespace nDictionaryUnitTest
                 Test1.Add(0, "Help");
                 var Test2 = Test1[0];
                 Assert.AreEqual(Test2.Key, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help") }).Key);
-                Assert.AreEqual(Test2.Value.Length, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help") }).Value.Length);
+                Assert.AreEqual(Test2.Values.Length, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help") }).Values.Length);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -166,7 +166,7 @@ namespace nDictionaryUnitTest
                 Test1.Add(0, "Help", "Me");
                 var Test2 = Test1[0];
                 Assert.AreEqual(Test2.Key, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help"), new Generic("Me") }).Key);
-                Assert.AreEqual(Test2.Value.Length, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help"), new Generic("Me") }).Value.Length);
+                Assert.AreEqual(Test2.Values.Length, new IDictionary<int>.nKeyValuePair(0, new Generic[] { new Generic("Help"), new Generic("Me") }).Values.Length);
                 return;
             }
             catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -586,7 +586,7 @@ namespace nDictionaryUnitTest
                 var Test2 = new List<string>();
                 foreach (nDictionary<int, string>.nKeyValuePair entry in Test1)
                 {
-                    Test2.Add(entry.Value[0].Cast<string>());
+                    Test2.Add(entry.Values[0].Cast<string>());
                 }
                 Assert.AreEqual(2, Test2.Count);
                 return;
@@ -604,7 +604,7 @@ namespace nDictionaryUnitTest
                 var Test2 = new List<string>();
                 foreach (nDictionary<int, string, string>.nKeyValuePair entry in Test1)
                 {
-                    Test2.Add(entry.Value[0].Cast<string>());
+                    Test2.Add(entry.Values[0].Cast<string>());
                 }
                 Assert.AreEqual(2, Test2.Count);
                 return;
@@ -615,52 +615,90 @@ namespace nDictionaryUnitTest
         [TestClass]
         public class SerializableTest
         {
-            //[TestMethod]
-            //public void SerializeTest()
-            //{
-            //    var Test1 = new nDictionary<int, string>();
-            //    Test1.Add(0, "Help");
-            //    Test1.Add(1, "Me");
-            //    Test1.Add(2, "Please");
-            //    FileStream fs = new FileStream("DataFile.dat", FileMode.Create);
-            //    BinaryFormatter formatter = new BinaryFormatter();
-            //    try
-            //    {
-            //        formatter.Serialize(fs, Test1);
-            //    }
-            //    catch (SerializationException e)
-            //    {
-            //        Assert.Fail("Failed to serialize. Reason: " + e.Message);
-            //    }
-            //    finally
-            //    {
-            //        fs.Close();
-            //    }
-            //}
+            [TestMethod]
+            public void SerializeTest1()
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                string fileName = "SerializeTest1.myData";
+                IFormatter formatter = new BinaryFormatter();
+                try
+                {
+                    FileStream s = new FileStream(fileName, FileMode.Create);
+                    formatter.Serialize(s, Test1);
+                    s.Close();
+                }
+                catch (Exception e)
+                {
+                    Assert.Fail("Failed to serialize. Reason: " + e.Message);
+                }
+            }
 
-            //[TestMethod]
-            //public void DeserializeTest()
-            //{
-            //    nDictionary<int, string> Test1 = null;
-            //    FileStream fs = new FileStream("DataFile.dat", FileMode.Open);
-            //    try
-            //    {
-            //        BinaryFormatter formatter = new BinaryFormatter();
-            //        Test1 = (nDictionary<int, string>)formatter.Deserialize(fs);
-            //    }
-            //    catch (SerializationException e)
-            //    {
-            //        Assert.Fail("Failed to deserialize. Reason: " + e.Message);
-            //    }
-            //    finally
-            //    {
-            //        fs.Close();
-            //    }
-            //    foreach (nDictionary<int, string>.nKeyValuePair de in Test1)
-            //    {
-            //        Console.WriteLine("{0} lives at {1}.", de.Key, de.Value);
-            //    }
-            //}
+            [TestMethod]
+            public void DeserializeTest1()
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                string fileName = "SerializeTest1.myData";
+                IFormatter formatter = new BinaryFormatter();
+                try
+                {
+                    FileStream s = new FileStream(fileName, FileMode.Open);
+                    nDictionary<int, string> t = (nDictionary<int, string>)formatter.Deserialize(s);
+                    Assert.AreEqual(3, t.Count);
+                    s.Close();
+                }
+                catch (Exception e)
+                {
+                    Assert.Fail("Failed to serialize. Reason: " + e.Message);
+                }
+            }
+            [TestMethod]
+            public void SerializeTest2()
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                string fileName = "SerializeTest2.myData";
+                IFormatter formatter = new BinaryFormatter();
+                try
+                {
+                    FileStream s = new FileStream(fileName, FileMode.Create);
+                    formatter.Serialize(s, Test1);
+                    s.Close();
+                }
+                catch (Exception e)
+                {
+                    Assert.Fail("Failed to serialize. Reason: " + e.Message);
+                }
+            }
+
+            [TestMethod]
+            public void DeserializeTes2t()
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                string fileName = "SerializeTest2.myData";
+                IFormatter formatter = new BinaryFormatter();
+                try
+                {
+                    FileStream s = new FileStream(fileName, FileMode.Open);
+                    nDictionary<int, string, string> t = (nDictionary<int, string, string>)formatter.Deserialize(s);
+                    Assert.AreEqual(3, t.Count);
+                    s.Close();
+                }
+                catch (Exception e)
+                {
+                    Assert.Fail("Failed to serialize. Reason: " + e.Message);
+                }
+            }
         }
 
         [TestClass]
@@ -745,7 +783,7 @@ namespace nDictionaryUnitTest
                     nDictionary<int, string>.nKeyValuePair value;
                     bool test = Test1.TryGetValue(0, out value);
                     Assert.IsTrue(test);
-                    string v = value.Value[0].Cast<string>();
+                    string v = value.Values[0].Cast<string>();
                     Assert.AreEqual("Help", v);
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
@@ -780,7 +818,7 @@ namespace nDictionaryUnitTest
                     nDictionary<int, string, string>.nKeyValuePair value;
                     bool test = Test1.TryGetValue(0, out value);
                     Assert.IsTrue(test);
-                    string v = value.Value[0].Cast<string>();
+                    string v = value.Values[0].Cast<string>();
                     Assert.AreEqual("Help", v);
                 }
                 catch (Exception ex) { Assert.Fail(ex.Message); }
