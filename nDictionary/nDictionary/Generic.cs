@@ -39,15 +39,33 @@ namespace nDictionary
         #region Methods
         public T Cast<T>(out T result)
         {
-            result = (T)GetValue;
-            return result;
+            try
+            {
+                result = (T)GetValue;
+                return result;
+            }
+            catch (InvalidCastException ex)
+            { throw new InvalidCastException(ex.Message, ex); }
         }
-        public T Cast<T>() => (T)this.GetValue;
+        public T Cast<T>()
+        {
+            try
+            { return (T)GetValue; }
+            catch (InvalidCastException ex)
+            { throw new InvalidCastException(ex.Message, ex); }
+        }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("type", type, typeof(Type));
-            info.AddValue("value", GetValue, type);
+            try
+            {
+                info.AddValue("type", type, typeof(Type));
+                info.AddValue("value", GetValue, type);
+            }
+            catch (ArgumentNullException ex)
+            { throw new ArgumentNullException(ex.Message, ex); }
+            catch (SerializationException ex)
+            { throw new SerializationException(ex.Message, ex); }
         }
         #endregion
 

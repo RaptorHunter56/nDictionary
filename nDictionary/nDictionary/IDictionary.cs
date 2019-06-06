@@ -14,7 +14,19 @@ namespace nDictionary
     {
         #region Parameters
         internal BaseDictonary<TKey> @base;
-        public int Count => @base.Dictionarys.Values.FirstOrDefault().Count();
+        public int Count
+        {
+            get
+            {
+                try
+                { return @base.Dictionarys.Values.FirstOrDefault().Count(); }
+                catch (ArgumentNullException ex)
+                { throw new ArgumentNullException(ex.Message, ex); }
+                catch (OverflowException ex)
+                { throw new OverflowException(ex.Message, ex); }
+            }
+        }
+
         public BaseDictonary<TKey>.nKeyCollection Keys => new BaseDictonary<TKey>.nKeyCollection(this);
         public BaseDictonary<TKey>.nValueCollection[] Values => BaseDictonary<TKey>.nValueCollection.GetOut(this);
         public IEqualityComparer<TKey> Comparer => @base.Comparer;
@@ -24,7 +36,12 @@ namespace nDictionary
         public IDictionary(Type[] types) => this.@base = new BaseDictonary<TKey>(types);
         public IDictionary(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("static.dic", GetEnumerator(), typeof(IEnumerator<nKeyValuePair>));
+            try
+            { info.AddValue("static.dic", GetEnumerator(), typeof(IEnumerator<nKeyValuePair>)); }
+            catch (ArgumentNullException ex)
+            { throw new ArgumentNullException(ex.Message, ex); }
+            catch (SerializationException ex)
+            { throw new SerializationException(ex.Message, ex); }
         }
         #endregion
 
@@ -40,8 +57,27 @@ namespace nDictionary
         private void Add(nKeyValuePair item) => this.Add(item.Key, item.Values);
 
         public void Clear() => @base.Clear();
-        public bool ContainsKey(TKey key) => @base.Dictionarys.Values.FirstOrDefault().ContainsKey(key);
-        public bool ContainsValue<T>(T value) => ContainsValue<T>(value, Enumerable.Range(1, Values.Count()).ToArray());
+        public bool ContainsKey(TKey key)
+        {
+            if (key == null) throw new ArgumentNullException("key", $"Value cannot be null.\r\nParameter name: {"key"}");
+            try
+            { return @base.Dictionarys.Values.FirstOrDefault().ContainsKey(key); }
+            catch (ArgumentNullException ex)
+            { throw new ArgumentNullException(ex.Message, ex); }
+        }
+
+        public bool ContainsValue<T>(T value)
+        {
+            if (value == null) throw new ArgumentNullException("value", $"Value cannot be null.\r\nParameter name: {"value"}");
+            try
+            { return ContainsValue<T>(value, Enumerable.Range(1, Values.Count()).ToArray()); }
+            catch (ArgumentOutOfRangeException ex)
+            { throw new ArgumentOutOfRangeException(ex.Message, ex); }
+            catch (ArgumentNullException ex)
+            { throw new ArgumentNullException(ex.Message, ex); }
+            catch (OverflowException ex)
+            { throw new OverflowException(ex.Message, ex); }
+        }
         public bool ContainsValue<T>(T value, int position) => ContainsValue<T>(value, new int[1] { position });
         public bool ContainsValue<T>(T value, int[] position) => @base.ContainsValue(value, position);
 
@@ -51,7 +87,14 @@ namespace nDictionary
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("list", new List<nKeyValuePair>() { new nKeyValuePair(new Generic(0).Cast<TKey>(), new dynamic[1] { "Help" }), new nKeyValuePair(new Generic(1).Cast<TKey>(), new dynamic[1] { "Me" }) }, typeof(List<nKeyValuePair>));
+            try
+            { info.AddValue("list", new List<nKeyValuePair>() { new nKeyValuePair(new Generic(0).Cast<TKey>(), new dynamic[1] { "Help" }), new nKeyValuePair(new Generic(1).Cast<TKey>(), new dynamic[1] { "Me" }) }, typeof(List<nKeyValuePair>)); }
+            catch (ArgumentNullException ex)
+            { throw new ArgumentNullException(ex.Message, ex); }
+            catch (SerializationException ex)
+            { throw new SerializationException(ex.Message, ex); }
+            catch (OverflowException ex)
+            { throw new OverflowException(ex.Message, ex); }
         }
 
         public bool Remove(TKey key) => ContainsKey(key) ? @base.Remove(key) : false;
@@ -63,22 +106,66 @@ namespace nDictionary
             return true;
         }
 
-        public static T ConvertValue<T>(string value) => (T)Convert.ChangeType(value, typeof(T));
-        public static object ConvertValue(string value , Type type) => Convert.ChangeType(value, type);
+        public static T ConvertValue<T>(string value)
+        {
+            if (value == null) throw new ArgumentNullException("value", $"Value cannot be null.\r\nParameter name: {"value"}");
+            try
+            { return (T)Convert.ChangeType(value, typeof(T)); }
+            catch (InvalidCastException ex)
+            { throw new InvalidCastException(ex.Message, ex); }
+            catch (FormatException ex)
+            { throw new FormatException(ex.Message, ex); }
+            catch (OverflowException ex)
+            { throw new OverflowException(ex.Message, ex); }
+            catch (ArgumentNullException ex)
+            { throw new ArgumentNullException(ex.Message, ex); }
+        }
+        public static object ConvertValue(string value, Type type)
+        {
+            if (value == null) throw new ArgumentNullException("value", $"Value cannot be null.\r\nParameter name: {"value"}");
+            if (type == null) throw new ArgumentNullException("type", $"Value cannot be null.\r\nParameter name: {"type"}");
+            try
+            { return Convert.ChangeType(value, type); }
+            catch (InvalidCastException ex)
+            { throw new InvalidCastException(ex.Message, ex); }
+            catch (FormatException ex)
+            { throw new FormatException(ex.Message, ex); }
+            catch (OverflowException ex)
+            { throw new OverflowException(ex.Message, ex); }
+            catch (ArgumentNullException ex)
+            { throw new ArgumentNullException(ex.Message, ex); }
+        }
 
         public static Dictionary<TKey, T> ToDictionary<T>(IDictionary<TKey> obj, int index = 0)
         {
-            Dictionary<TKey, T> temp = new Dictionary<TKey, T>();
-            foreach (nKeyValuePair item in obj)
-                temp.Add(item.Key, item.Values[index].Cast<T>());
-            return temp;
+            if (index < 1) throw new ArgumentNullException("index", $"Value cannot be null.\r\nParameter name: {"index"}");
+            if (obj == null || obj.Count < 1) throw new ArgumentNullException("obj", $"Value cannot be null.\r\nParameter name: {"obj"}");
+            try
+            {
+                Dictionary<TKey, T> temp = new Dictionary<TKey, T>();
+                foreach (nKeyValuePair item in obj)
+                    temp.Add(item.Key, item.Values[index].Cast<T>());
+                return temp;
+            }
+            catch (ArgumentNullException ex)
+            { throw new ArgumentNullException(ex.Message, ex); }
+            catch (ArgumentException ex)
+            { throw new ArgumentException(ex.Message, ex); }
         }
         public Dictionary<TKey, T> ToDictionary<T>(int index = 0)
         {
-            Dictionary<TKey, T> temp = new Dictionary<TKey, T>();
-            foreach (nKeyValuePair item in this)
-                temp.Add(item.Key, item.Values[index].Cast<T>());
-            return temp;
+            if (index < 1) throw new ArgumentNullException("index", $"Value cannot be null.\r\nParameter name: {"index"}");
+            try
+            {
+                Dictionary<TKey, T> temp = new Dictionary<TKey, T>();
+                foreach (nKeyValuePair item in this)
+                    temp.Add(item.Key, item.Values[index].Cast<T>());
+                return temp;
+            }
+            catch (ArgumentNullException ex)
+            { throw new ArgumentNullException(ex.Message, ex); }
+            catch (ArgumentException ex)
+            { throw new ArgumentException(ex.Message, ex); }
         }
 
         public static T Change<T>(IDictionary<TKey> obj) where T : IDictionary<TKey>, new()
@@ -107,29 +194,47 @@ namespace nDictionary
             #region Constructors
             public nKeyValuePair(TKey key, dynamic[] v)
             {
-                this.Key = key;
-                this.Values = v.ToList().Select(x => new Generic(x)).ToArray();
+                if (v == null || v.Length < 1) throw new ArgumentNullException("v", $"Value cannot be null.\r\nParameter name: {"v"}");
+                if (key == null) throw new ArgumentNullException("key", $"Value cannot be null.\r\nParameter name: {"key"}");
+                try
+                {
+                    this.Key = key;
+                    this.Values = v.ToList().Select(x => new Generic(x)).ToArray();
+                }
+                catch (ArgumentNullException ex)
+                { throw new ArgumentNullException(ex.Message, ex); }
             }
             public nKeyValuePair(TKey key, Generic[] v)
             {
                 this.Key = key;
                 this.Values = v;
             }
-            public nKeyValuePair(SerializationInfo info, StreamingContext context)
-            {
-            }
+            public nKeyValuePair(SerializationInfo info, StreamingContext context) { }
             #endregion
 
             #region Methods
             public void GetObjectData(SerializationInfo info, StreamingContext context)
             {
-                info.AddValue("key", Key, typeof(TKey));
-                info.AddValue("values", Values, typeof(Generic[]));
+                try
+                {
+                    info.AddValue("key", Key, typeof(TKey));
+                    info.AddValue("values", Values, typeof(Generic[]));
+                }
+                catch (ArgumentNullException ex)
+                { throw new ArgumentNullException(ex.Message, ex); }
+                catch (SerializationException ex)
+                { throw new SerializationException(ex.Message, ex); }
             }
             #endregion
 
             #region Overrides
-            public override string ToString() => $"[{this.Key}, [{String.Join(", ",this.Values.Select(x => x.GetValue))}]]";
+            public override string ToString()
+            {
+                try
+                { return $"[{this.Key}, [{String.Join(", ", this.Values.Select(x => x.GetValue))}]]"; }
+                catch (ArgumentNullException ex)
+                { throw new ArgumentNullException(ex.Message, ex); }
+            }
             #endregion
 
         }
@@ -148,19 +253,24 @@ namespace nDictionary
             #region Constructors
             public Enumerator(IDictionary<TKey> dictionary)
             {
-                var temp = dictionary.@base.Dictionarys.ToList();
-                this.dictionary = new List<nKeyValuePair>();
-                foreach (var item in temp[0].Value)
-                    this.dictionary.Add(new nKeyValuePair(item.Key, temp.Select(x => x.Value[item.Key]).ToArray()));
-                this.dictionaryBase = this.dictionary;
-                this.position = -1;
+                if (dictionary == null || dictionary.Count < 1) throw new ArgumentNullException("dictionary", $"Value cannot be null.\r\nParameter name: {"dictionary"}");
+                try
+                {
+                    var temp = dictionary.@base.Dictionarys.ToList();
+                    this.dictionary = new List<nKeyValuePair>();
+                    foreach (var item in temp[0].Value)
+                        this.dictionary.Add(new nKeyValuePair(item.Key, temp.Select(x => x.Value[item.Key]).ToArray()));
+                    this.dictionaryBase = this.dictionary;
+                    this.position = -1;
+                }
+                catch (ArgumentNullException ex)
+                { throw new ArgumentNullException(ex.Message, ex); }
             }
             public Enumerator(SerializationInfo info, StreamingContext context)
             {
                 this.dictionary = new List<nKeyValuePair>();
                 this.dictionaryBase = this.dictionary;
                 this.position = -1;
-                //info.AddValue("static.dic", GetEnumerator(), typeof(IEnumerator<nKeyValuePair>));
             }
             #endregion
 
@@ -184,7 +294,12 @@ namespace nDictionary
 
             public void GetObjectData(SerializationInfo info, StreamingContext context)
             {
-                info.AddValue("static.dic", dictionary, typeof(List<nKeyValuePair>));
+                try
+                { info.AddValue("static.dic", dictionary, typeof(List<nKeyValuePair>)); }
+                catch (ArgumentNullException ex)
+                { throw new ArgumentNullException(ex.Message, ex); }
+                catch (SerializationException ex)
+                { throw new SerializationException(ex.Message, ex); }
             }
             #endregion
         }
