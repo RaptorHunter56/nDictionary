@@ -841,5 +841,126 @@ namespace nDictionaryUnitTest
                 catch (Exception ex) { Assert.Fail(ex.Message); }
             }
         }
+
+
+        [TestClass]
+        public class ToDictionaryTest
+        {
+            [TestMethod]
+            public void ToDictionaryTest1()
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                try
+                {
+                    Dictionary<int, string> Tes223 = Test1.ToDictionary<string>();
+                    Assert.AreEqual(Test1.Count, Tes223.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void ToDictionaryTest2()
+            {
+                var Test1 = new Dictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                try
+                {
+                    nDictionary<int, string> Tes223 = Test1.TonDictionary();
+                    Assert.AreEqual(Test1.Count, Tes223.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+
+            [TestMethod]
+            public void ToDictionaryTest3()
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Help");
+                Test1.Add(1, "Me", "Me");
+                Test1.Add(2, "Please", "Please");
+                try
+                {
+                    Dictionary<int, string> Tes223 = Test1.ToDictionary<string>();
+                    Assert.AreEqual(Test1.Count, Tes223.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void ToDictionaryTest4()
+            {
+                var Test1 = new Dictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                try
+                {
+                    nDictionary<int, string, string> Tes223 = Test1.TonDictionary().Change<nDictionary<int, string, string>>();
+                    Assert.AreEqual(Test1.Count, Tes223.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+
+            [TestMethod]
+            public void ToDictionaryTest5()
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                try
+                {
+                    Dictionary<int, string> Tes223 = nDictionary<int, string>.ToDictionary<string>(Test1);
+                    Assert.AreEqual(Test1.Count, Tes223.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void ToDictionaryTest6()
+            {
+                var Test1 = new nDictionary<int, string>();
+                Test1.Add(0, "Help");
+                Test1.Add(1, "Me");
+                Test1.Add(2, "Please");
+                try
+                {
+                    nDictionary<int, string, string> Tes223 = nDictionary<int, string>.Change<nDictionary<int, string, string>>(Test1);
+                    Assert.AreEqual(Test1.Count, Tes223.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+
+            [TestMethod]
+            public void ToDictionaryTest7()
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Help");
+                Test1.Add(1, "Me", "Me");
+                Test1.Add(2, "Please", "Please");
+                try
+                {
+                    Dictionary<int, string> Tes223 = nDictionary<int, string>.ToDictionary<string>(Test1);
+                    Assert.AreEqual(Test1.Count, Tes223.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+            [TestMethod]
+            public void ToDictionaryTest8()
+            {
+                var Test1 = new nDictionary<int, string, string>();
+                Test1.Add(0, "Help", "Help");
+                Test1.Add(1, "Me", "Me");
+                Test1.Add(2, "Please", "Please");
+                try
+                {
+                    nDictionary<int, string> Tes223 = nDictionary<int, string, string>.Change<nDictionary<int, string>>(Test1);
+                    Assert.AreEqual(Test1.Count, Tes223.Count);
+                }
+                catch (Exception ex) { Assert.Fail(ex.Message); }
+            }
+        }
     }
 }

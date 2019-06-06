@@ -36,6 +36,9 @@ namespace nDictionary
         }
 
         public void Add(TKey key, params dynamic[] vs) => @base.Add(key, vs);
+
+        private void Add(nKeyValuePair item) => this.Add(item.Key, item.Values);
+
         public void Clear() => @base.Clear();
         public bool ContainsKey(TKey key) => @base.Dictionarys.Values.FirstOrDefault().ContainsKey(key);
         public bool ContainsValue<T>(T value) => ContainsValue<T>(value, Enumerable.Range(1, Values.Count()).ToArray());
@@ -62,8 +65,38 @@ namespace nDictionary
 
         public static T ConvertValue<T>(string value) => (T)Convert.ChangeType(value, typeof(T));
         public static object ConvertValue(string value , Type type) => Convert.ChangeType(value, type);
+
+        public static Dictionary<TKey, T> ToDictionary<T>(IDictionary<TKey> obj, int index = 0)
+        {
+            Dictionary<TKey, T> temp = new Dictionary<TKey, T>();
+            foreach (nKeyValuePair item in obj)
+                temp.Add(item.Key, item.Values[index].Cast<T>());
+            return temp;
+        }
+        public Dictionary<TKey, T> ToDictionary<T>(int index = 0)
+        {
+            Dictionary<TKey, T> temp = new Dictionary<TKey, T>();
+            foreach (nKeyValuePair item in this)
+                temp.Add(item.Key, item.Values[index].Cast<T>());
+            return temp;
+        }
+
+        public static T Change<T>(IDictionary<TKey> obj) where T : IDictionary<TKey>, new()
+        {
+            var result = new T();
+            foreach (nKeyValuePair item in obj)
+                result.Add(item);
+            return result;
+        }
+        public T Change<T>() where T : IDictionary<TKey>, new()
+        {
+            var result = new T();
+            foreach (nKeyValuePair item in this)
+                result.Add(item);
+            return result;
+        }
         #endregion
-        
+
         public class nKeyValuePair
         {
             #region Parameters

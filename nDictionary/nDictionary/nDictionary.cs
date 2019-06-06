@@ -11,6 +11,17 @@ using System.Xml.Serialization;
 
 namespace nDictionary
 {
+    public static class DictionaryExtensions
+    {
+        public static nDictionary<TKey, TValue> TonDictionary<TKey, TValue>(this Dictionary<TKey, TValue> str)
+        {
+            nDictionary<TKey, TValue> temp = new nDictionary<TKey, TValue>();
+            foreach (var item in str)
+                temp.Add(item.Key, item.Value);
+            return temp;
+        }
+    }
+
     [Serializable]
     public class nDictionary<TKey, TValue1> : IDictionary<TKey>
     {
